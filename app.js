@@ -67,13 +67,15 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // routing
-var routes = require('./routes/index');
+var index = require('./routes/index');
 var contents = require('./routes/contents');
+var admin = require('./routes/admin');
 var auth = require('./routes/auth')(passport);
 
-app.use('/', routes);
+app.use('/', index);
 app.use('/auth', auth);
 app.use('/', auth.ensureAuthenticated, contents);
+app.use('/admin', auth.ensureAuthenticated, auth.validateAdmin, admin);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

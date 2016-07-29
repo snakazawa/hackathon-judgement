@@ -1,9 +1,5 @@
 var express = require('express');
-var config = require('config');
-var _ = require('lodash');
 var User = require('../lib/models/user');
-
-var validUsernames = config.get('validUsernames');
 
 module.exports = function (passport) {
     var router = express.Router();
@@ -11,6 +7,11 @@ module.exports = function (passport) {
     router.ensureAuthenticated = function (req, res, next) {
         if (req.isAuthenticated()) { return next(); }
         res.redirect('/?requiredLogin=1');
+    };
+
+    router.validateAdmin = function (req, res, next) {
+        if (req.isAuthenticated()) { return next(); }
+        res.redirect('/?requiredAdmin=1');
     };
 
     router.get('/logout', function (req, res) {
@@ -21,7 +22,7 @@ module.exports = function (passport) {
     router.get('/github', passport.authenticate('github'));
 
     router.get('/github/callback', passport.authenticate('github', {failureRedirect: '/?failure=1'}), function (req, res, next) {
-        if (_.includes(validUsernames, req.user.username)) {
+        if (User.isValidUser(req.user.username)) {
             User.findOrCreate(req.user.username, function (err) {
                 if (err) {
                     console.log(err);
