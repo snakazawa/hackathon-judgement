@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/top.css'/>
+</head>
+<body>
+
+<% include ../_header %>
+
+<div class="main">
+    <div class="container">
+        <div class="row">
+            <h1><%= displayTitle %></h1>
+
+            <h2>Users</h2>
+            <table class="table table-striped">
+                <thead><tr><th>username</th><th>created_at</th></tr></thead>
+                <tbody>
+                <% users.forEach(function (user) { %>
+                <tr>
+                    <td><%= user.username %></td>
+                    <td><%= user.created_at %></td>
+                </tr>
+                <% }); %>
+                </tbody>
+            </table>
+
+            <h2>Valid Usernames</h2>
+            <ul>
+                <% validUsernames.forEach(function (username) { %>
+                <li><%= username %></li>
+                <% }); %>
+            </ul>
+
+            <h2>Admin Usernames</h2>
+            <ul>
+                <% adminUsernames.forEach(function (username) { %>
+                <li><%= username %></li>
+                <% }); %>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- include javascripts -->
+<script src="/vendor/jquery/dist/jquery.min.js"></script>
+<script src="/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+
+</body>
+</html>
