@@ -17,6 +17,9 @@
     "secret": "secret"
   },
 
-  "validUserIds": [
+  "validUsernames": [
+  ],
+
+  "adminUsernames": [
   ]
 }

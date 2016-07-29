@@ -1,4 +1,5 @@
 var express = require('express');
+var session = require('express-session');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
@@ -7,6 +8,7 @@ var bodyParser = require('body-parser');
 var passport = require('passport');
 var GitHubStrategy = require('passport-github').Strategy;
 var mongoose = require('mongoose');
+var mongo = require('connect-mongo');
 var config = require('config');
 
 var app = express();
@@ -52,15 +54,26 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(session({
+    name: config.session.name,
+    secret: config.session.secret,
+    store: new (mongo(session))({
+        url: config.mongo.url
+    }),
+    resave: true,
+    saveUninitialized: false
+}));
 app.use(passport.initialize());
 app.use(passport.session());
 
 // routing
 var routes = require('./routes/index');
+var contents = require('./routes/contents');
 var auth = require('./routes/auth')(passport);
 
 app.use('/', routes);
 app.use('/auth', auth);
+app.use('/', auth.ensureAuthenticated, contents);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
