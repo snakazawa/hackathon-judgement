@@ -1,7 +1,10 @@
 var express = require('express');
 var router = express.Router();
-var User = require('../lib/models/user');
 var config = require('config');
+var async = require('async');
+var _ = require('lodash');
+var User = require('../lib/models/user');
+var Team = require('../lib/models/team');
 
 router.get('/', function (req, res, next) {
     var username = req.user ? req.user.username : null;
@@ -17,7 +20,10 @@ router.get('/users', function (req, res, next) {
     var username = req.user ? req.user.username : null;
 
     User.find({}, function (err, users) {
-        if (err) { console.error(err); return next(err); }
+        if (err) {
+            console.error(err);
+            return next(err);
+        }
 
         res.render('admin/users', {
             title: 'ユーザ|管理画面',
@@ -33,11 +39,43 @@ router.get('/users', function (req, res, next) {
 
 router.get('/teams', function (req, res, next) {
     var username = req.user ? req.user.username : null;
-    res.render('admin/teams', {
-        title: 'チーム|管理画面',
-        displayTitle: '管理画面 > チーム',
-        username: username,
-        isAdmin : User.isAdminUser(username)
+
+    Team.find({enabled: true}).populate('users').exec(function (err, teams) {
+        if (err) {
+            console.error(err);
+            return next(err);
+        }
+
+        teams.forEach(function (team) {
+            team.usernames = team.users.map(function (user) { return user.username; });
+        });
+        console.log(teams);
+
+        res.render('admin/teams', {
+            title: 'チーム|管理画面',
+            displayTitle: '管理画面 > チーム',
+            username: username,
+            teams: teams,
+            result: req.query.result,
+            isAdmin: User.isAdminUser(username)
+        });
+    });
+});
+
+router.post('/teams', function (req, res, next) {
+    var newTeamParams = req.body.teams || [];
+    newTeamParams.forEach(function (team) {
+        if (_.isString(team.usernames)) {
+            team.usernames = team.usernames.split(',');
+        } else {
+            team.usernames = [];
+        }
+    });
+    console.log(newTeamParams);
+
+    Team.updateTeamsByParams(newTeamParams, function (err) {
+        if (err) { console.error(err); }
+        res.redirect('/admin/teams?result=' + (err ? 'error' : 'success'));
     });
 });
 

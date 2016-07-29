@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/top.css'/>
+</head>
+<body>
+
+<% include ../_header %>
+
+<div class="main">
+    <div class="container">
+        <div class="row">
+            <h1><%= displayTitle %></h1>
+
+            <h2>Teams</h2>
+            <form method="post">
+                <table class="table table-striped">
+                    <thead><tr><th>id</th><th>name</th><th>applicationName</th><th>usernames</th><th>#</th></tr></thead>
+                    <tbody class="teams">
+                    <% teams.forEach(function (team, idx) { %>
+                    <tr>
+                        <td>
+                            <p><%= team._id %></p>
+                            <input type="hidden" name="teams[<%= idx%>][_id]" value="<%= team._id %>"  />
+                        </td>
+                        <td><input tyee="text" class="form-control" name="teams[<%= idx%>][name]" value="<%= team.name %>" /></td>
+                        <td><input tyee="text" class="form-control" name="teams[<%= idx%>][applicationName]" value="<%= team.applicationName %>" /></td>
+                        <td><input tyee="text" class="form-control" name="teams[<%= idx%>][usernames]" value="<%= team.usernames %>" /></td>
+                        <td><button type="button" href="#" class="btn btn-sm btn-danger remove-team-btn"><i class="glyphicon glyphicon-remove"></i></button></td>
+                    </tr>
+                    <% }); %>
+                    </tbody>
+                </table>
+                <div>
+                    <button type="button" class="btn btn-primary add-team-btn">Add Team</button>
+                    <button type="submit" class="btn btn-success submit-btn">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- include javascripts -->
+<script src="/vendor/jquery/dist/jquery.min.js"></script>
+<script src="/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="/javascripts/routes/admin/teams.js"></script>
+
+</body>
+</html>
