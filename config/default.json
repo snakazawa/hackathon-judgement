@@ -1,0 +1,22 @@
+{
+  "title": "HackathonJudgement",
+
+  "mongo": {
+    "url": "mongodb://localhost/hackathon_judgement"
+  },
+
+  "github": {
+    "clientID": "",
+    "clientSecret": "",
+    "callbackURL": "http://127.0.0.1:8000/auth/github/callback",
+    "hookURL": "http://127.0.0.1:8000/github/:id"
+  },
+
+  "session": {
+    "name": "name",
+    "secret": "secret"
+  },
+
+  "validUserIds": [
+  ]
+}

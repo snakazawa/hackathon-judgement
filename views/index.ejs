@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/top.css'/>
+</head>
+<body>
+
+<% include _header %>
+
+<div class="main">
+    <div class="container">
+        <div class="form-login">
+            <h1><%= displayTitle %></h1>
+
+            <% if (failure) { %>
+            <p class="alert alert-danger">ログインに失敗しました。</p>
+            <% } %>
+
+            <% if (invalidUser) { %>
+            <p class="alert alert-danger">許可されていないユーザです。<a href="https://github.com" target="_blank">GitHubページ</a>で別のアカウントでログインしてからもう一度お試しください。</p>
+            <% } %>
+
+            <a type="button" class="btn btn-success btn-block" href="/auth/github">Login with GitHub &raquo;</a>
+        </div>
+    </div>
+</div>
+
+<!-- include javascripts -->
+<script src="/vendor/jquery/dist/jquery.min.js"></script>
+<script src="/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+
+</body>
+</html>
