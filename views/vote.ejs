@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/top.css'/>
+</head>
+<body>
+
+<% include _header %>
+
+<div class="main">
+    <div class="container">
+        <div class="row">
+            <h1><%= displayTitle %></h1>
+
+            <form method="post">
+                <ul>
+                    <% voteTeams.forEach(function (team) { %>
+                    <li>
+                        <h2><%= team.name %></h2>
+                        <p><%= team.applicationName %></p>
+
+                        <ul>
+                            <% voteItems.forEach(function (item) { %>
+                            <li>
+                                <h3><%= item.name %></h3>
+                                <p><%= item.description %></p>
+                                <label class="radio-inline">
+                                    <input type="radio" name="vote[<%= team._id %>][<%= item._id %>]" value="1"> 低い (1pt)
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="vote[<%= team._id %>][<%= item._id %>]" value="2"> やや低い (2pt)
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="vote[<%= team._id %>][<%= item._id %>]" value="3"> やや高い (3pt)
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="vote[<%= team._id %>][<%= item._id %>]" value="4"> 高い (4pt)
+                                </label>
+                            </li>
+                            <% }); %>
+                        </ul>
+                    </li>
+                    <% }); %>
+                </ul>
+
+                <button type="submit" class="btn btn-success">投票する</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- include javascripts -->
+<script src="/vendor/jquery/dist/jquery.min.js"></script>
+<script src="/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+
+</body>
+</html>
