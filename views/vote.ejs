@@ -2,6 +2,8 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title><%= title %></title>
     <link rel='stylesheet' href='/stylesheets/vote.css'/>
 </head>
@@ -26,6 +28,15 @@
             <div class="alert alert-danger">初期化エラーが発生しました。</div>
             <% } %>
 
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h3>配点</h3>
+                </div>
+                <div class="panel-body">
+                    <p>低い (1pt), やや低い (2pt), やや高い (3pt), 高い (4pt)</p>
+                </div>
+            </div>
+
             <form method="post" class="vote-form">
                 <div class="teams">
                     <% votes.forEach(function (team) { %>
@@ -47,7 +58,7 @@
                                 <pre class="item-description help-block"><%= voteItem.item.description %></pre>
 
                                 <% var optionName = 'vote[' + team.team._id + '][' + voteItem.item._id + ']'; %>
-                                <% ['低い (1pt)', 'やや低い (2pt)', 'やや高い (3pt)', '高い (4pt)'].forEach(function (name, idx) { %>
+                                <% ['低い', 'やや低い', 'やや高い', '高い'].forEach(function (name, idx) { %>
                                 <% var checked = voteItem.value === idx + 1; %>
                                 <label class="radio-inline">
                                     <input type="radio" name="<%= optionName %>" value="<%= (idx + 1) %>" <%= checked ? 'checked' : '' %> required> <%= name %>
