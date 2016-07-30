@@ -15,9 +15,9 @@
             <h1><%= displayTitle %></h1>
 
             <form method="post">
-                <ul>
+                <div class="teams">
                     <% voteTeams.forEach(function (team) { %>
-                    <li>
+                    <div class="team">
                         <h2><%= team.name %></h2>
                         <p><%= team.applicationName %></p>
 
@@ -41,9 +41,9 @@
                             </li>
                             <% }); %>
                         </ul>
-                    </li>
+                    </div>
                     <% }); %>
-                </ul>
+                </div>
 
                 <button type="submit" class="btn btn-success">投票する</button>
             </form>

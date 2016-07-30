@@ -26,7 +26,7 @@ router.get('/users', function (req, res, next) {
             return next(err);
         }
 
-        res.render('admin/users', {
+        res.render('admin_users', {
             title: 'ユーザ|管理画面',
             displayTitle: '管理画面 > ユーザ',
             username: username,
@@ -51,7 +51,7 @@ router.get('/teams', function (req, res, next) {
             team.usernames = team.users.map(function (user) { return user.username; });
         });
 
-        res.render('admin/teams', {
+        res.render('admin_teams', {
             title: 'チーム|管理画面',
             displayTitle: '管理画面 > チーム',
             username: username,
@@ -86,7 +86,7 @@ router.get('/vote_items', function (req, res, next) {
         }
 
         var username = req.user ? req.user.username : null;
-        res.render('admin/vote_items', {
+        res.render('admin_vote_items', {
             title: '投票項目|管理画面',
             displayTitle: '管理画面 > 投票項目',
             username: username,
