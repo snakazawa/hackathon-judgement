@@ -5,8 +5,8 @@ var User = require('../lib/models/user');
 router.get('/', function (req, res) {
     var username = req.user ? req.user.username : null;
     res.render('index', {
-        title: 'BeerHackathon Judgement',
-        displayTitle: 'BeerHackathon Judgement',
+        title: 'BeerHackathon Judge',
+        displayTitle: 'BeerHackathon Judge',
         failure: req.query.failure === '1',
         invalidUser: req.query.invaliduser === '1',
         username: username,

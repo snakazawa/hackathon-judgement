@@ -2,7 +2,10 @@
 @import "basic";
 
 .team .list-group .list-group-item {
-  border-style: none;
+  border: none;
+  border-radius: 0;
+  overflow-x: visible;
+  overflow-y: visible;
 }
 
 .vote-form {
@@ -20,4 +23,3 @@
 .btn-success {
   margin: 10px 0;
 }
-
