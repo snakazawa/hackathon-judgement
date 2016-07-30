@@ -1,8 +1,8 @@
+var _ = require('lodash');
 var express = require('express');
 var router = express.Router();
 var User = require('../lib/models/user');
-var Team = require('../lib/models/team');
-var VoteItem = require('../lib/models/vote_item');
+var Vote = require('../lib/models/vote');
 
 router.get('/userpage', function (req, res) {
     var username = req.user ? req.user.username : null;
@@ -17,21 +17,31 @@ router.get('/userpage', function (req, res) {
 router.get('/vote', function (req, res, next) {
     var username = req.user ? req.user.username : null;
 
-    Team.getWithoutMe(username, function (err, voteTeams) {
-        if (err) { return next(err); }
-
-        VoteItem.find({enabled: true}, function (err, voteItems) {
-            if (err) { return next(err); }
-
-            res.render('vote', {
-                title: '審査',
-                displayTitle: '審査',
-                username: username,
-                voteTeams: voteTeams,
-                voteItems: voteItems,
-                isAdmin : User.isAdminUser(username)
-            });
+    Vote.getUserVotes(username, function (err, userVotes) {
+        res.render('vote', {
+            title: '投票',
+            displayTitle: '投票',
+            initError: err,
+            result: req.query.result,
+            username: username,
+            votes: userVotes,
+            isAdmin : User.isAdminUser(username)
         });
+    });
+});
+
+router.post('/vote', function (req, res, next) {
+    var username = req.user ? req.user.username : null;
+
+    var votes = [];
+    _.forEach(req.body.vote, function (items, teamId) {
+        _.forEach(items, function (value, itemId) {
+            votes.push({username: username, teamId: teamId, voteItemId: itemId, value: Number(value)});
+        });
+    });
+
+    Vote.updateVotes(votes, function (err) {
+        res.redirect('/vote?result=' + (err ? 'error' : 'success'));
     });
 });
 

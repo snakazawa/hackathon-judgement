@@ -6,16 +6,17 @@
 
 .vote-form {
   margin: 20px 0;
+
+  .team .vote-items .vote-item .item-description {
+    margin: 0 0 10px;
+    padding: 0;
+    border-style: none;
+    background-color: inherit;
+    font-size: inherit;
+  }
 }
 
 .btn-success {
   margin: 10px 0;
 }
 
-.item-description {
-  margin: 0 0 10px;
-  padding: 0;
-  border-style: none;
-  background-color: inherit;
-  font-size: inherit;
-}

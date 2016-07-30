@@ -14,38 +14,45 @@
         <div class="row">
             <h1><%= displayTitle %></h1>
 
+            <% if (result === 'success') { %>
+            <div class="alert alert-success">投票が完了しました。</div>
+            <% } %>
+
+            <% if (result === 'danger') { %>
+            <div class="alert alert-danger">投票に失敗しました。</div>
+            <% } %>
+
+            <% if (initError) { %>
+            <div class="alert alert-danger">初期化エラーが発生しました。</div>
+            <% } %>
+
             <form method="post" class="vote-form">
                 <div class="teams">
-                    <% voteTeams.forEach(function (team) { %>
+                    <% votes.forEach(function (team) { %>
                     <div class="team panel panel-default">
                         <div class="panel-heading">
-                            <h2 class="team-name"><%= team.name %></h2>
-                            <p class="team-application-name"><%= team.applicationName %></p>
+                            <h2 class="team-name"><%= team.team.name %></h2>
+                            <p class="team-application-name"><%= team.team.applicationName %></p>
                             <p class="team-members">
-                                <% team.users.forEach(function (user) { %>
+                                <% team.team.users.forEach(function (user) { %>
                                 <span class="label label-info"><%= user.username %></span>
                                 <% }); %>
                             </p>
                         </div>
 
-                        <ul class="list-group">
-                            <% voteItems.forEach(function (item) { %>
-                            <li class="list-group-item">
-                                <h3 class="item-name"><%= item.name %></h3>
-                                <pre class="item-description help-block"><%= item.description %></pre>
+                        <ul class="list-group vote-items">
+                            <% team.voteItems.forEach(function (voteItem) { %>
+                            <li class="list-group-item vote-item">
+                                <h3 class="item-name"><%= voteItem.item.name %></h3>
+                                <pre class="item-description help-block"><%= voteItem.item.description %></pre>
 
+                                <% var optionName = 'vote[' + team.team._id + '][' + voteItem.item._id + ']'; %>
+                                <% ['低い (1pt)', 'やや低い (2pt)', 'やや高い (3pt)', '高い (4pt)'].forEach(function (name, idx) { %>
+                                <% var checked = voteItem.value === idx + 1; %>
                                 <label class="radio-inline">
-                                    <input type="radio" name="vote[<%= team._id %>][<%= item._id %>]" value="1"> 低い (1pt)
+                                    <input type="radio" name="<%= optionName %>" value="<%= (idx + 1) %>" <%= checked ? 'checked' : '' %> required> <%= name %>
                                 </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="vote[<%= team._id %>][<%= item._id %>]" value="2"> やや低い (2pt)
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="vote[<%= team._id %>][<%= item._id %>]" value="3"> やや高い (3pt)
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="vote[<%= team._id %>][<%= item._id %>]" value="4"> 高い (4pt)
-                                </label>
+                                <% }); %>
                             </li>
                             <% }); %>
                         </ul>
