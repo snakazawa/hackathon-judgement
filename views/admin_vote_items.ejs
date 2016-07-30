@@ -26,7 +26,7 @@
                             <input type="hidden" name="voteItems[<%= idx%>][_id]" value="<%= voteItem._id %>"  />
                         </td>
                         <td><input tyee="text" class="form-control" name="voteItems[<%= idx%>][name]" value="<%= voteItem.name %>" /></td>
-                        <td><input tyee="text" class="form-control" name="voteItems[<%= idx%>][description]" value="<%= voteItem.description %>" /></td>
+                        <td><textarea rows="3" class="form-control" name="voteItems[<%= idx%>][description]"><%= voteItem.description %></textarea></td>
                         <td><button type="button" href="#" class="btn btn-sm btn-danger remove-btn"><i class="glyphicon glyphicon-remove"></i></button></td>
                     </tr>
                     <% }); %>
