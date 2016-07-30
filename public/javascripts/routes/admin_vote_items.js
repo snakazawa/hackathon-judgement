@@ -17,6 +17,8 @@
             var name = prefix + '[' + item + ']';
             if (item === '_id') {
                 $tr.append('<td>(auto)</td>');
+            } else if (item === 'description') {
+                $tr.append('<td><textarea rows="3" class="form-control" name="' + name + '"></textarea></td>');
             } else {
                 $tr.append('<td><input type="text" class="form-control" name="' + name + '"></input></td>');
             }
