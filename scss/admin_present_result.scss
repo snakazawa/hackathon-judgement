@@ -1,0 +1,41 @@
+@charset "UTF-8";
+@import "basic";
+
+.legends {
+  margin-left: -40px;
+  display: inline-block;
+
+  li {
+    display: inline-block;
+    list-style-type: none;
+    margin: 4px;
+  }
+}
+
+.panel.team {
+  padding: 0 10px;
+
+  .panel-body {
+    padding: 5px 15px;
+
+    .progress {
+      margin-bottom: 10px;
+    }
+  }
+}
+
+.number-of-voted-people {
+  i {
+    margin: 2px;
+
+    transition: color 500ms linear;
+
+    &.disabled{
+      color: #aaa;
+    }
+  }
+
+  .counter {
+    margin-right: 10px;
+  }
+}

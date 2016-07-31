@@ -105,4 +105,15 @@ router.post('/vote_items', function (req, res, next) {
     });
 });
 
+router.get('/present_result', function (req, res, next) {
+    var username = req.user ? req.user.username : null;
+
+    res.render('admin_present_result', {
+        title: '結果発表',
+        displayTitle: '結果発表',
+        username: username,
+        isAdmin: User.isAdminUser(username)
+    });
+});
+
 module.exports = router;

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/top.css'/>
+    <link rel='stylesheet' href='/stylesheets/admin_present_result.css'/>
 </head>
 <body>
 
@@ -15,19 +15,20 @@
     <div class="container">
         <div class="row">
             <h1><%= displayTitle %></h1>
+
             <div>
-                <h2>DB</h2>
-                <ul>
-                    <li><a href="/admin/users">Users</a></li>
-                    <li><a href="/admin/teams">Teams</a></li>
-                    <li><a href="/admin/vote_items">VoteItems</a></li>
-                </ul>
+                <div class="number-of-voted-people alert alert-info">
+                    <span class="counter"><span class="enabled-number"></span> / <span class="max-number"></span></span>
+                </div>
+                <div class="legends-block">
+                    凡例: <ul class="legends"></ul>
+                </div>
             </div>
-            <div>
-                <h2>Result</h2>
-                <ul>
-                    <li><a href="/admin/present_result">結果発表</a></li>
-                </ul>
+
+            <div class="present-block">
+                <div class="teams">
+
+                </div>
             </div>
         </div>
     </div>
@@ -36,6 +37,8 @@
 <!-- include javascripts -->
 <script src="/vendor/jquery/dist/jquery.min.js"></script>
 <script src="/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="/vendor/lodash/lodash.min.js"></script>
+<script src="/javascripts/routes/admin_present_result.js"></script>
 
 </body>
 </html>
