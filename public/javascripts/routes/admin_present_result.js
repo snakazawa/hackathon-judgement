@@ -4,7 +4,8 @@
         labelTypes = ['success', 'info', 'warning', 'primary'];
         $teams = $('.teams'),
         $legends = $('.legends'),
-        $votedNumber = $('.number-of-voted-people');
+        $votedNumber = $('.number-of-voted-people'),
+        $linkResult = $('.link-result');
     let maxScore, teams, voteItems, usersVotes, teamRankTops;
 
     _.templateSettings.interpolate = /{{([\s\S]+?)}}/g;
@@ -39,6 +40,10 @@
             applyVote(usersVotes[idx], idx);
             if (++idx < usersVotes.length) {
                 setTimeout(f, 3000);
+            } else {
+                setTimeout(() => {
+                    $linkResult.removeClass('hidden');
+                }, 5000);
             }
         }, 3000);
     }, res => console.error(res));
