@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/basic.css'/>
+</head>
+<body>
+
+<% include _header %>
+
+<div class="main">
+    <div class="container">
+        <div class="row">
+            <h1><%= displayTitle %></h1>
+
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>TeamName</th>
+                        <th>ApplicationName</th>
+                        <% voteItems.forEach(function (voteItem) { %>
+                        <th><%= voteItem.name %> (max:<%= voteTeams.length * 4 %>)</th>
+                        <% }); %>
+                        <th>Total (max:<%= voteTeams.length * voteItems.length * 4 %>)</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <% voteTeams.forEach(function (voteTeam) { %>
+                    <tr>
+                        <td><%= voteTeam.rank %></td>
+                        <td><%= voteTeam.team.name %></td>
+                        <td><%= voteTeam.team.applicationName %></td>
+                        <% voteTeam.voteItems.forEach(function (voteItem) { %>
+                        <td <%= voteItem.isTop ? 'class=success' : '' %>><%= voteItem.value %></td>
+                        <% }); %>
+                        <td <%= voteTeam.rank === 1 ? 'class=success' : '' %>>
+                            <%= voteTeam.totalScore %>
+                        </td>
+                    </tr>
+                    <% }); %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- include javascripts -->
+<script src="/vendor/jquery/dist/jquery.min.js"></script>
+<script src="/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+
+</body>
+</html>

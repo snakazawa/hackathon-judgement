@@ -6,6 +6,7 @@ var _ = require('lodash');
 var User = require('../lib/models/user');
 var Team = require('../lib/models/team');
 var VoteItem = require('../lib/models/vote_item');
+var Vote = require('../lib/models/vote');
 
 router.get('/', function (req, res, next) {
     var username = req.user ? req.user.username : null;
@@ -113,6 +114,32 @@ router.get('/present_result', function (req, res, next) {
         displayTitle: '結果発表',
         username: username,
         isAdmin: User.isAdminUser(username)
+    });
+});
+
+router.get('/result', function (req, res, next) {
+    var username = req.user ? req.user.username : null;
+
+    async.parallel([
+        function (done) {
+            VoteItem.find({enabled: true}, function (err, results) { done(err, results); });
+        },
+        function (done) {
+            Vote.getTeamScores(function (err, results) { done(err, results); });
+        }
+    ], function (err, results) {
+        if (err) {
+            next(err);
+        } else {
+            res.render('admin_result', {
+                title: '結果|管理画面',
+                displayTitle: '管理画面 > 結果',
+                username: username,
+                isAdmin: User.isAdminUser(username),
+                voteItems: results[0],
+                voteTeams: results[1]
+            });
+        }
     });
 });
 
