@@ -12,11 +12,24 @@
   }
 }
 
+.teams {
+  position: relative;
+}
+
 .panel.team {
   padding: 0 10px;
 
   .panel-body {
     padding: 5px 15px;
+
+    .team-name {
+      display: inline-block;
+      margin-right: 10px;
+    }
+
+    .team-application-name {
+      display: inline-block;
+    }
 
     .progress {
       margin-bottom: 10px;
@@ -28,7 +41,7 @@
   i {
     margin: 2px;
 
-    transition: color 500ms linear;
+    transition: color 1000ms linear;
 
     &.disabled{
       color: #aaa;
