@@ -1,6 +1,6 @@
 (function () {
     const stubNumberOfPeople = 15,
-        enabledMakeStub = true,
+        enabledMakeStub = false,
         labelTypes = ['success', 'info', 'warning', 'primary'];
         $teams = $('.teams'),
         $legends = $('.legends'),
